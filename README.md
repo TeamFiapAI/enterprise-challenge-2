@@ -1,72 +1,181 @@
-# FIAP - Faculdade de Informática e Administração Paulista
+# Plataforma de Manutenção Preditiva Industrial
 
-<p align="center">
-<a href= "https://www.fiap.com.br/"><img src="assets/logo-fiap.png" alt="FIAP - Faculdade de Informática e Admnistração Paulista" border="0" width=40% height=40%></a>
-</p>
+Bem-vindo ao repositório da Plataforma de Manutenção Preditiva Industrial! Esta solução tem como objetivo demonstrar uma arquitetura inicial para prevenção de falhas em linhas de produção, aplicando conceitos de IoT e Machine Learning.
 
-<br>
+---
 
-# Nome do projeto
+## 📖 Sumário
 
-## Nome do grupo
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades Principais](#-funcionalidades-principais)
+- [Arquitetura](#-arquitetura)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Estratégia de Coleta de Dados](#-estratégia-de-coleta-de-dados)
+- [Como Executar (Modo Simulado)](#-como-executar-modo-simulado)
+- [Planejamento e Papéis](#-planejamento-e-papéis)
+- [Estrutura do Repositório](#-estrutura-do-repositório)
+- [Contribuição](#-contribuição)
+- [Licença](#-licença)
 
-## 👨‍🎓 Integrantes: 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 1</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 5</a>
+---
 
-## 👩‍🏫 Professores:
-### Tutor(a) 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do Tutor</a>
-### Coordenador(a)
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do Coordenador</a>
+## 🎯 Sobre o Projeto
 
+Paradas inesperadas em linhas de produção geram custos elevados e atrasos. Esta plataforma visa:
 
-## 📜 Descrição
+- Monitorar em tempo real parâmetros críticos (vibração, temperatura, umidade).
+- Detectar anomalias operacionais via análise de dados e Machine Learning.
+- Prever falhas antes que ocorram, ajudando na manutenção preditiva.
+- Gerar alertas e relatórios automatizados para tomada de decisão.
 
-*Descreva seu projeto com base no texto do PBL (até 600 palavras)*
+Este repositório cobre a **Fase 3 do desafio**, focando em metodologia, arquitetura e tecnologias, sem exigir código funcional completo.
 
+---
 
-## 📁 Estrutura de pastas
+## 🚀 Funcionalidades Principais
 
-Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
+- **Ingestão de Dados**: API de coleta via FastAPI (MQTT/HTTP).
+- **Armazenamento**: Banco PostgreSQL (local ou AWS RDS).
+- **Processamento**: Pipeline agendado executando modelos de ML (Scikit-learn/TensorFlow).
+- **Visualização**: Dashboard interativo em React.js e Dash (Plotly) ou Grafana.
+- **Alertas**: Relatórios em PDF e notificações (e-mail/webhook).
 
-- <b>.github</b>: Nesta pasta ficarão os arquivos de configuração específicos do GitHub que ajudam a gerenciar e automatizar processos no repositório.
+---
 
-- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
+## 📐 Arquitetura
 
-- <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
+```text
+[Sensores ESP32] --MQTT--> [API Coleta (FastAPI)] --> [PostgreSQL RDS]
+                                        |
+                                Agendamento (Lambda/EventBridge)
+                                        v
+                           [API Análise (FastAPI + ML)]
+                                        |
+                           Atualiza resultados no RDS
+                                        |
+            ------------------------------------------------------
+            |                                                    |
+   [Dashboard React/Dash]                                [Relatórios Automáticos]
+```
 
-- <b>document</b>: aqui estão todos os documentos do projeto que as atividades poderão pedir. Na subpasta "other", adicione documentos complementares e menos importantes.
+---
 
-- <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
+## 🛠 Tecnologias Utilizadas
 
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto ao longo das 7 fases.
+| Camada              | Ferramenta / Serviço                     |
+|---------------------|------------------------------------------|
+| Coleta de Dados     | Python, MQTT, ESP32 ou Simulador Python  |
+| API Ingestão        | FastAPI                                  |
+| Banco de Dados      | PostgreSQL (AWS RDS ou local)            |
+| Machine Learning    | Scikit-learn, TensorFlow                 |
+| Agendamento         | AWS Lambda + EventBridge ou Cron         |
+| Dashboard           | React.js, Dash (Plotly) ou Grafana       |
+| Infraestrutura      | AWS EC2, RDS, S3                          |
+| Diagramação         | diagrams.net                             |
 
-- <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
+---
 
-## 🔧 Como executar o código
+## 📊 Estratégia de Coleta de Dados
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
+### Modo Simulado (recomendado nesta fase):
 
+- Script Python (`simulator.py`) gera sinais de vibração, temperatura e umidade.
+- Publicação periódica via HTTP/MQTT na API de coleta.
 
-## 🗃 Histórico de lançamentos
+### Modo Real (Futuro MVP):
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+- ESP32 com sensores DHT22 e acelerômetro.
+- Firmware em MicroPython enviando dados via MQTT.
 
-## 📋 Licença
+---
 
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/agodoi/template">MODELO GIT FIAP</a> por <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://fiap.com.br">Fiap</a> está licenciado sobre <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
+## ▶️ Como Executar (Modo Simulado)
 
+Clone o repositório:
 
+```bash
+git clone https://github.com/SEU_USUARIO/repositorio-preditiva.git
+cd repositorio-preditiva
+```
+
+Crie um ambiente virtual e instale dependências:
+
+```bash
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Execute o simulador de dados:
+
+```bash
+cd simulator && python simulator.py
+```
+
+Suba a API de coleta:
+
+```bash
+cd api-coleta && uvicorn main:app --reload
+```
+
+Configure o banco (PostgreSQL) e ajuste `settings.py` com credenciais.
+
+---
+
+## 📅 Planejamento e Papéis
+
+| Responsável        | Atividades Principais                                      |
+|--------------------|-------------------------------------------------------------|
+| Líder de Projeto   | Coordenação geral, revisão e comunicação com tutores       |
+| Engenheiro de Dados| API de ingestão, simulação e modelagem do esquema de banco |
+| Cientista de Dados | Desenvolvimento e validação de modelos de detecção         |
+| Backend Engineer   | API de análise, agendamento de jobs e integração com ML     |
+| Front-end Developer| Implementação do dashboard e gráficos interativos           |
+| DevOps / Infra     | Provisionamento AWS, CI/CD e monitoramento                 |
+
+### Cronograma (2 semanas):
+
+- **Semana 1**: Configuração inicial, simulador e API de coleta.
+- **Semana 2**: Pipeline de ML, protótipo de dashboard e documentação final.
+
+---
+
+## 📂 Estrutura do Repositório
+
+```text
+repo-root/
+├── simulator/          # Simulador de dados (simulator.py)
+├── api-coleta/         # FastAPI de ingestão (main.py)
+├── api-analise/        # FastAPI de processamento e ML (main.py)
+├── dashboard/          # Front-end React/Dash
+├── infra/              # Scripts de infraestrutura (Terraform/CloudFormation)
+├── docs/               # Diagramas e documentação extra
+│   └── arquitetura.drawio
+├── requirements.txt    # Dependências Python
+└── README.md           # Este arquivo
+```
+
+---
+
+## 🤝 Contribuição
+
+1. Faça um fork deste repositório.
+2. Crie uma branch com sua feature:
+
+```bash
+git checkout -b feature/nome-da-feature
+```
+
+3. Commit e push da sua branch:
+
+```bash
+git commit -m 'Descrição da feature'
+git push origin feature/nome-da-feature
+```
+
+4. Abra um Pull Request.
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a MIT License. Consulte o arquivo LICENSE para mais detalhes.
