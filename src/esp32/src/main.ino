@@ -37,9 +37,9 @@ void loop()
 
   Serial.print("Umidade: ");
   Serial.print(umidade);
-  Serial.print("| % Temperatura: ");
+  Serial.print(" % | Temperatura: ");
   Serial.print(temperatura);
-  Serial.print("| Potenciometro: ");
+  Serial.print("C | Potenciometro: ");
   Serial.println(potenciometro);
 
   Serial.print("Gas (analogico): ");
