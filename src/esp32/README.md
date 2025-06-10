@@ -51,3 +51,32 @@ O sistema aciona o LED e o buzzer quando qualquer uma das seguintes condições 
 - Temperatura acima de 40°C
 - Potenciômetro acima de 650
 - Sensor de gás (digital) detecta fumaça/gás (LOW)
+
+### Formato da Saída - CSV
+#### COLUNAS
+~~~~
+umidade;temperatura;potenciometro;gas_analogico;gas_digital;alarme
+~~~~
+#### EXEMPLO
+~~~~
+40.50;2.30;0;3628;0;1
+0.00;-40.00;320;3650;0;1
+0.00;-40.00;320;1202;1;0
+60.50;17.70;320;843;1;0
+72.00;17.70;320;843;1;1
+49.00;43.20;320;843;1;1
+35.50;19.80;320;843;1;0
+34.50;19.80;697;843;1;1
+34.50;19.80;576;843;1;0
+~~~~
+
+### 📷 Prints
+- Emitindo alarme de som e luz
+![Alarme Ligado](../../assets/esp32/alarme_ligado.png)
+
+- Alarme desligado com exemplo de temperatura e humidade
+![Temperatura e Humiade](../../assets/esp32/temperatura_e_humidade.png)
+
+
+### Referencia
+[Wokwi](https://wokwi.com/projects/433368210236612609)
